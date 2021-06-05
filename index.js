@@ -15,37 +15,34 @@ app.get('/', function(req, res){
   Servidor propriamente dito
 */
 
-const notes = [
-    {id: 0, username: "Guilherme", password : "guilherme", email: "gui@gmail.com"},
-    {id: 1, username: "Eric", password : "ericaobrabo", email: "eric@gmail.com"},
-]
+const users = []
 
-const endpoint = "/notes";
+const endpoint = "/users";
 
 app.get(endpoint, function(req, res){
-    res.send(notes.filter(Boolean));
-    // res.send(notes);
+    res.send(users.filter(Boolean));
+    // res.send(users);
 });
 
 app.get(`${endpoint}/:id`, function(req, res){
     const id = req.params.id;
-    const note = notes[id];
+    const user = users[id];
 
-    if (!note){
+    if (!user){
         res.send("{}");
     } else {
-        res.send(note);
+        res.send(user);
     }   
 });
 
 app.post(endpoint, (req, res) => {
-    const note = {
-        id : notes.length,
+    const user = {
+        id : users.length,
         username : req.body["username"],
         password : req.body["password"],
         email : req.body["email"]
     };
-    notes.push(note);
+    users.push(user);
     res.send("1");
 
     notify();
@@ -53,14 +50,14 @@ app.post(endpoint, (req, res) => {
 
 app.put(`${endpoint}/:id`, (req, res) =>{
     const id = parseInt(req.params.id);
-    const note = {
+    const user = {
         id : id,
         username : req.body["username"],
         password : req.body["password"],
         email : req.body["email"]
     };
 
-    notes[id] = note;
+    users[id] = user;
     res.send("1");
 
     notify();
@@ -68,7 +65,7 @@ app.put(`${endpoint}/:id`, (req, res) =>{
 
 app.delete(`${endpoint}/:id`, (req, res) => {
     const id = req.params.id;
-    delete notes[id];
+    delete users[id];
     res.send("1");
 
     // Notificar todos
