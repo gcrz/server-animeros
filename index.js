@@ -90,4 +90,4 @@ function notify(){
     io.sockets.emit(INVALIDATE, 1);
 }
 
-server.listen(process.env.PORT);
+server.listen(process.env.PORT || 2000);
